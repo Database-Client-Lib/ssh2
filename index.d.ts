@@ -1278,30 +1278,34 @@ export interface FileEntry {
     attrs: Attributes;
 }
 
+declare class FastTransferEvent extends Sequence {
+    on(event: 'onRead', listener: (len:number) => any): this;
+}
+
 export interface SFTPWrapper extends EventEmitter {
     /**
      * (Client-only)
      * Downloads a file at `remotePath` to `localPath` using parallel reads for faster throughput.
      */
-    fastGet(remotePath: string, localPath: string, options: TransferOptions, callback: Callback): void;
+    fastGet(remotePath: string, localPath: string, options: TransferOptions, callback: Callback): FastTransferEvent;
 
     /**
      * (Client-only)
      * Downloads a file at `remotePath` to `localPath` using parallel reads for faster throughput.
      */
-    fastGet(remotePath: string, localPath: string, callback: Callback): void;
+    fastGet(remotePath: string, localPath: string, callback: Callback): FastTransferEvent;
 
     /**
      * (Client-only)
      * Uploads a file from `localPath` to `remotePath` using parallel reads for faster throughput.
      */
-    fastPut(localPath: string, remotePath: string, options: TransferOptions, callback: Callback): void;
+    fastPut(localPath: string, remotePath: string, options: TransferOptions, callback: Callback): FastTransferEvent;
 
     /**
      * (Client-only)
      * Uploads a file from `localPath` to `remotePath` using parallel reads for faster throughput.
      */
-    fastPut(localPath: string, remotePath: string, callback: Callback): void;
+    fastPut(localPath: string, remotePath: string, callback: Callback): FastTransferEvent;
 
     /**
      * (Client-only)
